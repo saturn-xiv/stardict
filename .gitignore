@@ -1,0 +1,7 @@
+# rust
+/target
+**/*.rs.bk
+Cargo.lock
+
+# test
+/tmp

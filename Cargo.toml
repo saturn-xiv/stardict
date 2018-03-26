@@ -1,0 +1,9 @@
+[package]
+name = "stardict"
+version = "0.1.0"
+authors = ["Jeremy Zheng <jitang.zheng@gmail.com>"]
+description = "Rust implementation of reader for StarDict format."
+homepage = "https://github.com/cinnabaris/stardict"
+license = "MIT"
+
+[dependencies]
