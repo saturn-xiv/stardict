@@ -11,7 +11,7 @@ dictzip -d *.dict.dz
 
 ## Usage
 
-    [dependencies.epub]
+    [dependencies.stardict]
     git = "https://github.com/cinnabaris/stardict.git"
 
 ## Documents
