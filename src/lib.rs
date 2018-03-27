@@ -36,6 +36,20 @@ impl StarDict {
         }
         return items;
     }
+
+    pub fn search(&mut self, word: &str) -> Vec<dictionary::Translation> {
+        let mut items = Vec::new();
+        for mut it in &mut self.directories {
+            match it.search(word) {
+                Ok(v) => items.push(dictionary::Translation {
+                    info: it.ifo.clone(),
+                    results: v,
+                }),
+                Err(e) => warn!("search {} in {} failed: {}", word, it.ifo.name, e),
+            }
+        }
+        return items;
+    }
 }
 
 #[cfg(test)]
@@ -54,9 +68,14 @@ mod tests {
     fn it_works() {
         env_logger::init();
         match StarDict::new(Path::new("/usr").join("share").join("stardict").join("dic")) {
-            Ok(mut st) => for it in st.info() {
-                println!("{:?}", it);
-            },
+            Ok(mut st) => {
+                for it in st.info() {
+                    println!("{:?}", it);
+                }
+                for it in st.search("hello") {
+                    println!("{} v{} \n {:?}", it.info.name, it.info.version, it.results);
+                }
+            }
             Err(e) => fail(e),
         }
     }
