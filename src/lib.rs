@@ -59,24 +59,17 @@ mod tests {
     use std::path::Path;
     use super::*;
 
-    fn fail(e: result::Error) {
-        println!("fail: {:?}", e);
-        assert!(false);
-    }
-
     #[test]
     fn it_works() {
         env_logger::init();
-        match StarDict::new(Path::new("/usr").join("share").join("stardict").join("dic")) {
-            Ok(mut st) => {
-                for it in st.info() {
-                    println!("{:?}", it);
-                }
-                for it in st.search("hello") {
-                    println!("{} v{} \n {:?}", it.info.name, it.info.version, it.results);
-                }
-            }
-            Err(e) => fail(e),
+
+        let mut st =
+            StarDict::new(Path::new("/usr").join("share").join("stardict").join("dic")).unwrap();
+        for it in st.info() {
+            println!("{:?}", it);
+        }
+        for it in st.search("hello") {
+            println!("{} v{} \n {:?}", it.info.name, it.info.version, it.results);
         }
     }
 }
