@@ -1,4 +1,4 @@
-# stardict
+# Stardict
 
 Rust implementation of reader for StarDict format.
 
@@ -11,8 +11,10 @@ dictzip -d *.dict.dz
 
 ## Usage
 
-    [dependencies.stardict]
-    git = "https://github.com/saturn-xiv/stardict.git"
+```
+[dependencies.stardict]
+git = "https://github.com/saturn-xiv/stardict.git"
+```
 
 ## Documents
 
