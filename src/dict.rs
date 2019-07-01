@@ -6,6 +6,6 @@ pub struct Dict {}
 
 impl Dict {
     pub fn open(_file: path::PathBuf) -> Result<Dict> {
-        return Ok(Dict {});
+        Ok(Dict {})
     }
 }

@@ -12,7 +12,7 @@ dictzip -d *.dict.dz
 ## Usage
 
     [dependencies.stardict]
-    git = "https://github.com/cinnabaris/stardict.git"
+    git = "https://github.com/saturn-xiv/stardict.git"
 
 ## Documents
 

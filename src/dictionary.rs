@@ -1,9 +1,9 @@
-use std::{io, path};
+use std::path;
 
-use super::result::{Error, Result};
+use super::dict::Dict;
 use super::idx::Idx;
 use super::ifo::Ifo;
-use super::dict::Dict;
+use super::result::Result;
 
 pub struct Dictionary {
     pub idx: Idx,
@@ -16,20 +16,20 @@ impl Dictionary {
         if let Some(name) = root.file_name() {
             if let Some(name) = name.to_str() {
                 return Ok(Dictionary {
-                    idx: try!(Idx::open(root.join(format!("{}.idx", name)))),
-                    ifo: try!(Ifo::open(root.join(format!("{}.ifo", name)))),
-                    dict: try!(Dict::open(root.join(format!("{}.dict", name)))),
+                    idx: Idx::open(root.join(format!("{}.idx", name)))?,
+                    ifo: Ifo::open(root.join(format!("{}.ifo", name)))?,
+                    dict: Dict::open(root.join(format!("{}.dict", name)))?,
                 });
             }
         }
-        return Err(Error::Io(io::Error::from(io::ErrorKind::NotFound)));
+        Err(format_err!("bad dictionary directory {}", root.display()))
     }
 
     pub fn search(&mut self, word: &str) -> Result<Vec<TranslationItem>> {
         match self.ifo.version.as_ref() {
             "2.4.2" => self.search242(word),
             "3.0.0" => self.search300(word),
-            _ => Err(Error::Io(io::Error::from(io::ErrorKind::InvalidData))),
+            v => Err(format_err!("bad dictionary version {}", v)),
         }
     }
 
@@ -39,7 +39,7 @@ impl Dictionary {
             mode: 'h',
             body: "hi v2.4.2".to_string(),
         });
-        return Ok(items);
+        Ok(items)
     }
 
     fn search300(&mut self, _word: &str) -> Result<Vec<TranslationItem>> {
@@ -48,7 +48,7 @@ impl Dictionary {
             mode: 'h',
             body: "hi v3.0.0".to_string(),
         });
-        return Ok(items);
+        Ok(items)
     }
 }
 

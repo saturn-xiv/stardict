@@ -5,8 +5,12 @@ use std::path::Path;
 #[test]
 fn it_works() {
     let mut st = stardict::StarDict::new(
-        Path::new("/usr").join("share").join("stardict").join("dic"),
-    ).unwrap();
+        Path::new("/mnt")
+            .join("cbeta")
+            .join("GoldenDict")
+            .join("13Dicts"),
+    )
+    .unwrap();
     for it in st.info() {
         println!("{:?}", it);
     }

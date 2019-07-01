@@ -1,5 +1,5 @@
-use std::{fs, io, path};
 use std::io::BufRead;
+use std::{fs, io, path};
 
 use super::result::Result;
 
@@ -33,8 +33,8 @@ impl Ifo {
             word_count: 0,
             syn_word_count: 0,
         };
-        for line in io::BufReader::new(try!(fs::File::open(file))).lines() {
-            let line = try!(line);
+        for line in io::BufReader::new(fs::File::open(file)?).lines() {
+            let line = line?;
             if let Some(id) = line.find('=') {
                 let key = &line[..id];
                 let val = String::from(&line[id + 1..]);
@@ -44,16 +44,16 @@ impl Ifo {
                     "version" => it.version = val,
                     "description" => it.description = val,
                     "date" => it.date = val,
-                    "idxfilesize" => it.idx_file_size = try!(val.parse()),
-                    "wordcount" => it.word_count = try!(val.parse()),
+                    "idxfilesize" => it.idx_file_size = val.parse()?,
+                    "wordcount" => it.word_count = val.parse()?,
                     "website" => it.web_site = val,
                     "email" => it.email = val,
                     "sametypesequence" => it.same_type_sequence = val,
-                    "synwordcount" => it.syn_word_count = try!(val.parse()),
+                    "synwordcount" => it.syn_word_count = val.parse()?,
                     _ => warn!("Ingnore line: {}", line),
                 };
             }
         }
-        return Ok(it);
+        Ok(it)
     }
 }

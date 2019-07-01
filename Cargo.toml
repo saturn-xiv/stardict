@@ -3,8 +3,9 @@ name = "stardict"
 version = "0.1.0"
 authors = ["Jeremy Zheng <jitang.zheng@gmail.com>"]
 description = "Rust implementation of reader for StarDict format."
-homepage = "https://github.com/cinnabaris/stardict"
+homepage = "https://github.com/saturn-xiv/stardict"
 license = "MIT"
 
 [dependencies]
 log = "0.4"
+failure = "0.1"
